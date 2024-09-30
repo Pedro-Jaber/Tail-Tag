@@ -4,11 +4,14 @@ const expressLayouts = require("express-ejs-layouts");
 const dotenv = require("dotenv");
 
 //* Imports
+const { connectDB } = require("./model/dataBase");
+const Pet = require("./model/model_pet");
 
 //* Dotenv
 dotenv.config();
 
 //* Connect to DB
+connectDB();
 
 //* App
 const app = express();
@@ -44,6 +47,11 @@ app.get("/pet-position", (req, res) => {
     lat: "-15.80531734672924",
     lgn: "-47.951357575312976",
   });
+});
+
+app.get("/test", async (req, res) => {
+  const data = await Pet.find();
+  console.log(data[0]);
 });
 
 //* Server Init
