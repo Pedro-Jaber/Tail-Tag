@@ -20,22 +20,38 @@ app.use(express.static("public"));
 //* EJS Config
 app.use(expressLayouts);
 app.set("view engine", "ejs");
-app.set("layouts", "layouts/main");
+app.set("layout", "layouts/main");
 
 //* Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //* Routes
-app.get(["/", "home"], (req, res) => {
-  res.status(200).send("Hello, World!");
+app.get(["/", "/home"], (req, res) => {
+  res.status(200).render("home");
+});
+
+app.get("/map", (req, res) => {
+  const L = null; //require("leaflet");
+
+  res.status(200).render("map", { L });
+});
+
+app.post("/map-post", (req, res) => {});
+
+app.get("/pet-position", (req, res) => {
+  res.status(200).json({
+    lat: "-15.80531734672924",
+    lgn: "-47.951357575312976",
+  });
 });
 
 //* Server Init
 //TODO connect to database before start
 app.listen(PORT, () => {
-  console.log("Server:\x1b[92m Online \x1b[0m");
-  console.log("Port: " + PORT);
-  console.log(`link: http://localhost:${PORT}`);
-  console.log("->");
+  console.log("┌─────────────────────────────┐");
+  console.log("│ Server:\x1b[92m Online \x1b[0m             │");
+  console.log(`│ Port: ${PORT}                  │`);
+  console.log(`│ link: http://localhost:${PORT} │`);
+  console.log("└─────────────────────────────┘");
 });

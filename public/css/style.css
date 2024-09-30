@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&display=swap");
+
+:root {
+  /* Light || https://coolors.co/0e0e10-ff6e1a-e0e1f3 */
+  --cap-white: #e0e1f3;
+  --cap-black: #0e0e10;
+  --cap-orange: #ff6e1a;
+}
+
+/* Breakpoints */
+
+/* Extra small */
+@media (max-width: 575px) {
+}
+
+/* Small */
+@media (min-width: 576px) {
+}
+
+/* Medium */
+@media (min-width: 768px) {
+}
+
+/* Large */
+@media (min-width: 992px) {
+}
+
+/* Extra Large */
+@media (min-width: 1200px) {
+}
+
+/* Extra Extra Large */
+@media (min-width: 1400px) {
+}
+
+/** Tag A B C D E F G H I J K L M N O P Q R S T U V W X Y Z*/
+
+/** Classes A B C D E F G H I J K L M N O P Q R S T U V W X Y Z*/
+
+/* Extra small */
+@media (max-width: 575px) {
+  .main-box {
+    max-width: 640px;
+  }
+}
+
+/* Small */
+@media (min-width: 576px) {
+  .main-box {
+    max-width: 576px;
+  }
+}
+
+/* Medium */
+@media (min-width: 768px) {
+  .main-box {
+    max-width: 768px;
+  }
+}
+
+/* Large */
+@media (min-width: 992px) {
+  .main-box {
+    max-width: 992px;
+  }
+}
+
+/* Extra Large */
+@media (min-width: 1200px) {
+  .main-box {
+    max-width: 1200px;
+  }
+}
+
+/* Extra Extra Large */
+@media (min-width: 1400px) {
+  .main-box {
+    max-width: 1400px;
+  }
+}
+
+.map {
+  width: 50vw;
+  height: 50vh;
+
+  border-radius: 14px;
+}
+
+.map-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+}

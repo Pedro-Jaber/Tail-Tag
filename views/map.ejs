@@ -1,0 +1,46 @@
+<link
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  rel="stylesheet"
+/>
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""
+></script>
+
+<div class="map-div">
+  <div id="map" class="map"></div>
+</div>
+
+<script src="/js/leaflet.js"></script>
+
+<!--
+<div id="osm-map"></div>
+
+<script>
+  // Where you want to render the map.
+  var element = document.getElementById("osm-map");
+
+  // Height has to be set. You can do this in CSS too.
+  element.style = "height: 300px;";
+
+  // Create Leaflet map on map element.
+  var map = L.map(element);
+
+  // Add OSM tile layer to the Leaflet map.
+  L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+
+  // Target's GPS coordinates.
+  var target = L.latLng("-15.808683158160095", "-47.98173756719864");
+
+  // Set map's center to target with zoom 14.
+  map.setView(target, 14);
+
+  // Place a marker on the same location.
+  L.marker(target).addTo(map);
+</script>
+-->
