@@ -42,16 +42,48 @@ app.get("/map", (req, res) => {
 
 app.post("/map-post", (req, res) => {});
 
-app.get("/pet-position", (req, res) => {
-  res.status(200).json({
-    lat: "-15.80531734672924",
-    lgn: "-47.951357575312976",
-  });
+app.post("/pet-position", async (req, res) => {
+  const incomeUrl = req.body.incomeUrl;
+  const id = req.body.id;
+  const latitude = req.body.latitude;
+  const longitude = req.body.longitude;
+
+  console.log(req.body);
+
+  // Save image and information on data database
+  try {
+    await Pet.updateOne(
+      {
+        _id: id,
+      },
+      {
+        $push: { latitude: latitude, longitude: longitude },
+      }
+    ).then(() => {
+      //* Status 200 Updated
+      res.status(200).redirect(incomeUrl);
+    });
+  } catch (error) {
+    console.log(error);
+    //* Status 500 Internal Server Error
+    res.status(500).send("500 Internal Server Error");
+  }
+
+  //TODO Status 400 Bad Request //error in information
+  //res.status(400).send("400 Bad Request");
 });
 
-app.get("/test", async (req, res) => {
-  const data = await Pet.find();
-  console.log(data[0]);
+app.get("/pet-position/:id", async (req, res) => {
+  const data = await Pet.findById(req.params.id, {
+    latitude: { $slice: -10 },
+    longitude: { $slice: -10 },
+  });
+
+  res.status(200).json(data);
+});
+
+app.get("/pet-position-forms", (req, res) => {
+  res.status(200).render("pet_postion_forms");
 });
 
 //* Server Init

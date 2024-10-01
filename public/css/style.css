@@ -35,6 +35,11 @@
 
 /** Tag A B C D E F G H I J K L M N O P Q R S T U V W X Y Z*/
 
+body {
+  display: flex;
+  justify-content: center;
+}
+
 /** Classes A B C D E F G H I J K L M N O P Q R S T U V W X Y Z*/
 
 /* Extra small */
@@ -90,7 +95,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
 
-  width: 100vw;
+.hv100 {
   height: 100vh;
 }

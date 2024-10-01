@@ -9,11 +9,62 @@
   crossorigin=""
 ></script>
 
-<div class="map-div">
-  <div id="map" class="map"></div>
-</div>
+<section class="main-box mt-5">
+  <div class="map-div">
+    <div id="map" class="map"></div>
+  </div>
 
+  <section>
+    <div class="mt-5">
+      <form action="/pet-position" method="post">
+        <div class="mb-3">
+          <label for="id" class="form-label">id</label>
+          <input
+            type="text"
+            class="form-control"
+            id="id"
+            aria-describedby="id"
+            name="id"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="latitude" class="form-label">Latitude</label>
+          <input
+            type="text"
+            class="form-control"
+            id="latitude"
+            aria-describedby="latitude"
+            name="latitude"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="longitude" class="form-label">Longitude</label>
+          <input
+            type="text"
+            class="form-control"
+            id="longitude"
+            aria-describedby="longitude"
+            name="longitude"
+          />
+        </div>
+
+        <input type="hidden" value="/map" id="incomeUrl" name="incomeUrl" />
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </section>
+</section>
 <script src="/js/leaflet.js"></script>
+
+<script>
+  // while (true) {
+  // console.log("loop");
+  get_pet_position("66fb1dfc246731cf65513abf");
+
+  // sleep(20000);
+  // }
+</script>
 
 <!--
 <div id="osm-map"></div>
