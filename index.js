@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 //* Imports
 const { connectDB } = require("./model/dataBase");
 const Pet = require("./model/model_pet");
+const publiScapeRouters = require("./routers/public_space_routers");
 
 //* Dotenv
 dotenv.config();
@@ -30,9 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //* Routes
-app.get(["/", "/home"], (req, res) => {
-  res.status(200).render("home");
-});
+app.use(publiScapeRouters);
 
 app.get("/map", (req, res) => {
   const L = null; //require("leaflet");
