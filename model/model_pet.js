@@ -4,8 +4,8 @@ const { Schema } = mongoose;
 const PetSchema = new Schema(
   {
     name: String,
-    latitude: [mongoose.Types.Decimal128],
-    longitude: [mongoose.Types.Decimal128],
+    latitude: [mongoose.Schema.Types.Decimal128],
+    longitude: [mongoose.Schema.Types.Decimal128],
   },
   { timestamps: true, collection: "pets" }
 );
