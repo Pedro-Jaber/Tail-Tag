@@ -17,6 +17,7 @@
     "express": "^4.21.0",
     "express-ejs-layouts": "^2.5.1",
     "leaflet": "^1.9.4",
-    "mongoose": "^8.7.0"
+    "mongoose": "^8.7.0",
+    "validator": "^13.12.0"
   }
 }
