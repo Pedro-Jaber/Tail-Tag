@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const PetSchema = new Schema(
   {
     name: String,
+    birthdate: Date,
     latitude: [mongoose.Schema.Types.Decimal128],
     longitude: [mongoose.Schema.Types.Decimal128],
   },
