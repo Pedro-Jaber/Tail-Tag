@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 const { isEmail } = require("validator");
 const { Schema } = mongoose;
 
+//TODO add user roles list
+//admin, normal user
+
 const UserSchema = new Schema(
   {
     email: {
@@ -52,5 +55,21 @@ const UserSchema = new Schema(
 );
 
 //TODO hash password with bcrypt
+
+UserSchema.statics.login = async function (email, password) {
+  const user = await this.findOne({ email });
+  if (user) {
+    const auth = await this.comparePassword(password, user.password);
+    if (auth) {
+      return user;
+    }
+  }
+  throw Error("incorrect credentials");
+};
+
+UserSchema.statics.comparePassword = async function (password, hash) {
+  //TODO use bcrypt
+  return password === hash;
+};
 
 module.exports = mongoose.model("User", UserSchema);

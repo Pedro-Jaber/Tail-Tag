@@ -1,0 +1,59 @@
+<form>
+  <h2>Login</h2>
+
+  <div class="general error"></div>
+
+  <div>
+    <label for="email">Email</label>
+    <input type="text" name="email" required />
+  </div>
+
+  <div>
+    <label for="password">Senha</label>
+    <input type="password" name="password" required />
+  </div>
+
+  <button>Entrar</button>
+</form>
+
+<!-- 
+  carlinhas@gmail.com
+  Asdf!123
+-->
+
+<script>
+  const form = document.querySelector("form");
+  const generalError = document.querySelector(".general.error");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    //reset errors
+    generalError.textContent = "";
+
+    // get the values
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+      const res = await fetch("/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+      //console.log(data)
+
+      if (data.errors) {
+        // <div class="general error"></div>
+        generalError.textContent = data.errors.general;
+      }
+      if (data.user) {
+        location.assign("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+</script>
