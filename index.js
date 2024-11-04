@@ -1,6 +1,7 @@
 //* Dependencies
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
+const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 
 //* Imports
@@ -8,6 +9,7 @@ const { connectDB } = require("./model/dataBase");
 const Pet = require("./model/model_pet");
 const publiScapeRouters = require("./routers/public_space_routers");
 const authRouters = require("./routers/auth_routers");
+const { requireAuth } = require("./middleware/auth");
 
 //* Dotenv
 dotenv.config();
@@ -30,13 +32,14 @@ app.set("layout", "layouts/main");
 //* Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 
 //* Routes
 app.use(publiScapeRouters);
 app.use(authRouters);
 //app.use(userSpaceRouters);
 
-app.get("/map", (req, res) => {
+app.get("/map", requireAuth, (req, res) => {
   const L = null; //require("leaflet");
 
   res.status(200).render("map", { L });
