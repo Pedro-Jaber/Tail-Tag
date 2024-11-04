@@ -15,6 +15,21 @@ const UserSchema = new Schema(
       type: String,
       required: [true, "Please enter a password"],
       minlength: [6, "Minimum password length is 6 characters"],
+      validate: {
+        validator: function (v) {
+          // This regex ensures the password has:
+          // - At least one lowercase letter
+          // - At least one uppercase letter
+          // - At least one digit
+          // - At least one special character from @$!%*?&
+          // - Minimum length of 6 characters
+          return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(
+            v
+          );
+        },
+        message:
+          "Password must have at least 6 characters, one lowercase letter, one uppercase letter, one number, and one special character",
+      },
     },
     name: String,
     cpf: String,
@@ -36,5 +51,6 @@ const UserSchema = new Schema(
   { timestamps: true, collection: "users" }
 );
 
+//TODO hash password with bcrypt
+
 module.exports = mongoose.model("User", UserSchema);
-// List possible informations to be stored in user
