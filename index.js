@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 const { connectDB } = require("./model/dataBase");
 const Pet = require("./model/model_pet");
 const publiScapeRouters = require("./routers/public_space_routers");
+const authRouters = require("./routers/auth_routers");
 
 //* Dotenv
 dotenv.config();
@@ -32,6 +33,8 @@ app.use(express.json());
 
 //* Routes
 app.use(publiScapeRouters);
+app.use(authRouters);
+//app.use(userSpaceRouters);
 
 app.get("/map", (req, res) => {
   const L = null; //require("leaflet");
