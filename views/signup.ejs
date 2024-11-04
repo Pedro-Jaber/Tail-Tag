@@ -1,0 +1,127 @@
+<form>
+  <h2>Crie sua conta</h2>
+
+  <div>
+    <label for="email">Email</label>
+    <input type="text" name="email" required />
+    <div class="email error"></div>
+  </div>
+
+  <div>
+    <p>
+      A senha deve conter pelo menos: <br />
+      - 6 caracteres <br />
+      - uma letra maiúscula <br />
+      - uma letra minúscula <br />
+      - um número <br />
+      - um caractere especial <br />
+    </p>
+  </div>
+
+  <div>
+    <label for="password">Senha</label>
+    <input type="password" name="password" required />
+    <div class="password error"></div>
+  </div>
+
+  <div>
+    <label for="verify_password">Verirficar Senha</label>
+    <input type="password" name="verify_password" required />
+    <div class="verify_password error"></div>
+  </div>
+
+  <div>
+    <button type="submit">Criar</button>
+  </div>
+</form>
+
+<!-- 
+  carlinhas@gmail.com
+  Asdf!123
+-->
+
+<script>
+  const form = document.querySelector("form");
+  const emailError = document.querySelector(".email.error");
+  const passwordError = document.querySelector(".password.error");
+  const verifyPasswordError = document.querySelector(".verify_password.error");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    //reset errors
+    emailError.textContent = "";
+    passwordError.textContent = "";
+
+    // get the values
+    const email = form.email.value;
+    const password = form.password.value;
+    const verify_password = form.verify_password.value;
+
+    // Regex to validate password
+    const validations = [
+      {
+        regex: /(?=.*[a-z])/,
+        message: " - A senha colocada não contem nehuma letra minúscula",
+      },
+      {
+        regex: /(?=.*[A-Z])/,
+        message: " - A senha colocada não contem nehuma letra maiúscula",
+      },
+      {
+        regex: /(?=.*\d)/,
+        message: " - A senha colocada não contem nehum número",
+      },
+      {
+        regex: /[@$!%*?&]/,
+        message: " - A senha colocada não contem nehum caracter especial",
+      },
+      {
+        regex: /(?=.{6,})/,
+        message: " - A senha colocada tem menos de 6 caracteres",
+      },
+    ];
+
+    // Validate password
+    const erorr_messages = [];
+    for (const validation of validations) {
+      if (!validation.regex.test(password)) {
+        erorr_messages.push(validation.message);
+      }
+    }
+
+    if (erorr_messages.length > 0) {
+      passwordError.innerHTML = erorr_messages.join("<br/>");
+      return;
+    }
+
+    // Check if password and verify_password are equal
+    if (password !== verify_password) {
+      verifyPasswordError.textContent = "As senhas são diferentes";
+      return;
+    }
+
+    try {
+      const res = await fetch("/signup", {
+        method: "POST",
+        body: JSON.stringify({ email, password, verify_password }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+      //console.log(data)
+
+      if (data.errors) {
+        // <div class="email error"></div>
+        emailError.textContent = data.errors.email;
+        // <div class="password error"></div>
+        passwordError.textContent = data.errors.password;
+      }
+      if (data.user) {
+        location.assign("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+</script>
