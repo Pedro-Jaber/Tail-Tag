@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
-const { isEmail } = require("validator");
 const { Schema } = mongoose;
+const { isEmail } = require("validator");
+const bcrypt = require("bcrypt");
+
+const saltRounds = 10;
 
 //TODO add user roles list
 //admin, normal user
@@ -54,7 +57,11 @@ const UserSchema = new Schema(
   { timestamps: true, collection: "users" }
 );
 
-//TODO hash password with bcrypt
+UserSchema.pre("save", async function (next) {
+  const salt = await bcrypt.genSalt(saltRounds);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
 UserSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
@@ -68,8 +75,8 @@ UserSchema.statics.login = async function (email, password) {
 };
 
 UserSchema.statics.comparePassword = async function (password, hash) {
-  //TODO use bcrypt
-  return password === hash;
+  return await bcrypt.compare(password, hash);
+  //return password === hash;
 };
 
 module.exports = mongoose.model("User", UserSchema);
