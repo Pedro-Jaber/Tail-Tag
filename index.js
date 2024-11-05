@@ -6,7 +6,6 @@ const dotenv = require("dotenv");
 
 //* Imports
 const { connectDB } = require("./model/dataBase");
-const Pet = require("./model/model_pet");
 const publiScapeRouters = require("./routers/public_space_routers");
 const authRouters = require("./routers/auth_routers");
 const { requireAuth } = require("./middleware/auth");
@@ -39,13 +38,14 @@ app.use(publiScapeRouters);
 app.use(authRouters);
 //app.use(userSpaceRouters);
 
+//* Routes Test ======================
+const Pet = require("./model/model_pet");
+
 app.get("/map", requireAuth, (req, res) => {
   const L = null; //require("leaflet");
 
   res.status(200).render("map", { L });
 });
-
-app.post("/map-post", (req, res) => {});
 
 app.post("/pet-position", async (req, res) => {
   const incomeUrl = req.body.incomeUrl;
@@ -90,6 +90,7 @@ app.get("/pet-position/:id", async (req, res) => {
 app.get("/pet-position-forms", (req, res) => {
   res.status(200).render("pet_postion_forms");
 });
+//* ==================================
 
 //* Server Init
 //TODO connect to database before start
