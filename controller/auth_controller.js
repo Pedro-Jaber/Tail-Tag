@@ -8,7 +8,7 @@ const maxAge = 3 * 24 * 60 * 60;
 // handle errors
 const handleErrors = (err) => {
   //console.log(err.message, err.code, err.errors)
-  let errors = { email: "", password: "", general: "" };
+  let errors = { name: "", lastname: "", email: "", password: "", general: "" };
 
   // incorrect email
   if (err.message === "incorrect email") {
@@ -32,33 +32,56 @@ const handleErrors = (err) => {
   }
 
   // validation errors | gets error messages from user model
-  if (err.message.includes("user validation failed")) {
+  if (
+    err.message.includes("User validation failed") ||
+    err.message.includes("Validation failed")
+  ) {
     Object.values(err.errors).forEach(({ properties }) => {
       errors[properties.path] = properties.message;
+      // console.log(`${properties.path} = ${properties.message}`);
     });
   }
+
+  // console.log(errors);
 
   return errors;
 };
 
 // create json web token
-const createAccessToken = (id) => {
+const createAccessToken = (user) => {
   //TODO add user roles list
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: maxAge,
-  });
+  return jwt.sign(
+    {
+      iss: "Pet Radar",
+      sub: user._id,
+      context: {
+        user: {
+          id: user._id,
+          email: user.email,
+          username: user.username,
+          name: user.name,
+          lastname: user.lastname,
+        },
+        // role: user.roles,
+      },
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: maxAge,
+    }
+  );
 };
 
 // sign up
 module.exports.signup_post = async (req, res) => {
-  const { email, password } = req.body;
+  const { name, lastname, email, password } = req.body;
 
   //TODO Remove before deployment
   console.log(`User sign up`);
   console.log(req.body);
 
   try {
-    const user = await User.create({ email, password });
+    const user = await User.create({ name, lastname, email, password });
 
     res.status(201).json({ user: user._id });
   } catch (error) {
@@ -78,7 +101,7 @@ module.exports.login_post = async (req, res) => {
 
   try {
     const user = await User.login(email, password);
-    const token = createAccessToken(user._id);
+    const token = createAccessToken(user);
 
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(200).json({ user: user._id });

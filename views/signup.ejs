@@ -2,6 +2,18 @@
   <h2>Crie sua conta</h2>
 
   <div>
+    <label for="name">Nome</label>
+    <input type="text" name="name" required />
+    <div class="name error"></div>
+  </div>
+
+  <div>
+    <label for="lastname">Sobrenome</label>
+    <input type="text" name="lastname" required />
+    <div class="lastname error"></div>
+  </div>
+
+  <div>
     <label for="email">Email</label>
     <input type="text" name="email" required />
     <div class="email error"></div>
@@ -35,13 +47,17 @@
   </div>
 </form>
 
-<!-- 
-  carlinhas@gmail.com
-  Asdf!123
+<!--
+  carlinhos
+  gameplays
+  carlinhos.plays@gmail.com
+  Plays@123
 -->
 
 <script>
   const form = document.querySelector("form");
+  const nameError = document.querySelector(".name.error");
+  const lastnameError = document.querySelector(".lastname.error");
   const emailError = document.querySelector(".email.error");
   const passwordError = document.querySelector(".password.error");
   const verifyPasswordError = document.querySelector(".verify_password.error");
@@ -50,10 +66,14 @@
     e.preventDefault();
 
     //reset errors
+    nameError.textContent = "";
+    lastnameError.textContent = "";
     emailError.textContent = "";
     passwordError.textContent = "";
 
     // get the values
+    const name = form.name.value;
+    const lastname = form.lastname.value;
     const email = form.email.value;
     const password = form.password.value;
     const verify_password = form.verify_password.value;
@@ -90,6 +110,7 @@
       }
     }
 
+    // Show password errors
     if (erorr_messages.length > 0) {
       passwordError.innerHTML = erorr_messages.join("<br/>");
       return;
@@ -101,19 +122,32 @@
       return;
     }
 
+    // Send request and get response with errors
     try {
       const res = await fetch("/signup", {
         method: "POST",
-        body: JSON.stringify({ email, password, verify_password }),
+        body: JSON.stringify({
+          name,
+          lastname,
+          email,
+          password,
+        }),
         headers: { "Content-Type": "application/json" },
       });
 
       const data = await res.json();
-      //console.log(data)
+      console.log(data);
 
       if (data.errors) {
+        // <div class="name error"></div>;
+        nameError.textContent = data.errors.name;
+
+        // <div class="lastname error"></div>;
+        lastnameError.textContent = data.errors.lastname;
+
         // <div class="email error"></div>
         emailError.textContent = data.errors.email;
+
         // <div class="password error"></div>
         passwordError.textContent = data.errors.password;
       }
