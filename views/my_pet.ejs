@@ -1,0 +1,107 @@
+<%- include("./partials/getPet.ejs") %>
+
+<link
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  rel="stylesheet"
+/>
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""
+></script>
+
+<section class="main-box mt-5">
+  <div class="map-div">
+    <div id="map" class="map"></div>
+  </div>
+
+  <section>
+    <div class="mt-5">
+      <form action="/pet-position" method="post">
+        <div class="mb-3">
+          <label for="id" class="form-label">id</label>
+          <input
+            type="text"
+            class="form-control"
+            id="id"
+            aria-describedby="id"
+            name="id"
+            value="<%- pet._id %>"
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="latitude" class="form-label">Latitude</label>
+          <input
+            type="text"
+            class="form-control"
+            id="latitude"
+            aria-describedby="latitude"
+            name="latitude"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="longitude" class="form-label">Longitude</label>
+          <input
+            type="text"
+            class="form-control"
+            id="longitude"
+            aria-describedby="longitude"
+            name="longitude"
+          />
+        </div>
+
+        <input
+          type="hidden"
+          value="/pet/<%- pet._id %>"
+          id="incomeUrl"
+          name="incomeUrl"
+        />
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </section>
+</section>
+<script src="/js/leaflet.js"></script>
+
+<script>
+  // while (true) {
+  // console.log("loop");
+
+  get_pet_position(pet._id);
+
+  // sleep(20000);
+  // }
+</script>
+
+<!--
+<div id="osm-map"></div>
+
+<script>
+  // Where you want to render the map.
+  var element = document.getElementById("osm-map");
+
+  // Height has to be set. You can do this in CSS too.
+  element.style = "height: 300px;";
+
+  // Create Leaflet map on map element.
+  var map = L.map(element);
+
+  // Add OSM tile layer to the Leaflet map.
+  L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+
+  // Target's GPS coordinates.
+  var target = L.latLng("-15.808683158160095", "-47.98173756719864");
+
+  // Set map's center to target with zoom 14.
+  map.setView(target, 14);
+
+  // Place a marker on the same location.
+  L.marker(target).addTo(map);
+</script>
+-->

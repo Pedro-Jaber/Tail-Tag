@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 //* Imports
 const { connectDB } = require("./model/dataBase");
 const publiScapeRouters = require("./routers/public_space_routers");
+const userSpaceRouters = require("./routers/user_space_routers");
 const authRouters = require("./routers/auth_routers");
 const { requireAuth } = require("./middleware/auth");
 
@@ -36,7 +37,7 @@ app.use(cookieParser());
 //* Routes
 app.use(publiScapeRouters);
 app.use(authRouters);
-//app.use(userSpaceRouters);
+app.use(requireAuth, userSpaceRouters);
 
 //* Routes Test ======================
 const Pet = require("./model/model_pet");

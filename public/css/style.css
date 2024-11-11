@@ -42,6 +42,10 @@
 
 /** Classes A B C D E F G H I J K L M N O P Q R S T U V W X Y Z*/
 
+.bg-dark-soft {
+  background-color: hsl(210, 11%, 20%);
+}
+
 /* Extra small */
 @media (max-width: 575px) {
   .main-box {
