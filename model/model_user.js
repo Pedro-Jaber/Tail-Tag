@@ -10,6 +10,14 @@ const saltRounds = 10;
 
 const UserSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: [true, "Please enter your name"],
+    },
+    lastname: {
+      type: String,
+      required: [true, "Please enter your last name"],
+    },
     email: {
       type: String,
       required: [true, "Please enter an email"],
