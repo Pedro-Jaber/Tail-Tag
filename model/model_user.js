@@ -45,7 +45,6 @@ const UserSchema = new Schema(
           "Password must have at least 6 characters, one lowercase letter, one uppercase letter, one number, and one special character",
       },
     },
-    name: String,
     cpf: String,
     address: {
       street: String,
