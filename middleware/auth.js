@@ -1,14 +1,21 @@
 const jwt = require("jsonwebtoken");
 
 module.exports.requireAuth = (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (!token) {
+    return res.redirect("/login");
+  }
+
   try {
-    const token = req.cookies.jwt;
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decodedToken;
     next();
   } catch (error) {
-    // console.log(error);
-    // res.status(401).json({ error: "Unauthorized" });
-    res.redirect("/login");
+    if (error.name === "JsonWebTokenError") {
+      return res.redirect("/login");
+    }
+
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
