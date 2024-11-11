@@ -8,7 +8,7 @@ module.exports.requireAuth = (req, res, next) => {
 
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decodedToken;
+    req.decodedToken = decodedToken;
     next();
   } catch (error) {
     if (error.name === "JsonWebTokenError") {
