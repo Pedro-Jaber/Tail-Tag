@@ -49,7 +49,6 @@ app.get("/map", requireAuth, (req, res) => {
 });
 
 app.post("/pet-position", async (req, res) => {
-  const incomeUrl = req.body.incomeUrl;
   const id = req.body.id;
   const latitude = req.body.latitude;
   const longitude = req.body.longitude;
@@ -67,12 +66,12 @@ app.post("/pet-position", async (req, res) => {
       }
     ).then(() => {
       //* Status 200 Updated
-      res.status(200).redirect(incomeUrl);
+      res.status(200).json({ status: 200, message: "updated" });
     });
   } catch (error) {
     console.log(error);
     //* Status 500 Internal Server Error
-    res.status(500).send("500 Internal Server Error");
+    res.status(500).json({ status: 500, message: "Internal Server Error" });
   }
 
   //TODO Status 400 Bad Request //error in information

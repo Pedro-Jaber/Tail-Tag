@@ -16,54 +16,54 @@
     <div id="map" class="map"></div>
   </div>
 
-  <section>
-    <div class="mt-5">
-      <form action="/pet-position" method="post">
-        <div class="mb-3">
-          <label for="id" class="form-label">id</label>
-          <input
-            type="text"
-            class="form-control"
-            id="id"
-            aria-describedby="id"
-            name="id"
-            value="<%- pet._id %>"
-            readonly
-          />
-        </div>
-        <div class="mb-3">
-          <label for="latitude" class="form-label">Latitude</label>
-          <input
-            type="text"
-            class="form-control"
-            id="latitude"
-            aria-describedby="latitude"
-            name="latitude"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="longitude" class="form-label">Longitude</label>
-          <input
-            type="text"
-            class="form-control"
-            id="longitude"
-            aria-describedby="longitude"
-            name="longitude"
-          />
-        </div>
-
-        <input
-          type="hidden"
-          value="/pet/<%- pet._id %>"
-          id="incomeUrl"
-          name="incomeUrl"
-        />
-
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-    </div>
-  </section>
+  <div>
+    <span>Auto update in:</span>
+    <span id="time-to-update"></span>
+    <span>s</span>
+  </div>
 </section>
+
+<section>
+  <div class="mt-5">
+    <form>
+      <div class="mb-3">
+        <label for="id" class="form-label">id</label>
+        <input
+          type="text"
+          class="form-control"
+          id="id"
+          aria-describedby="id"
+          name="id"
+          value="<%- pet._id %>"
+          readonly
+        />
+      </div>
+      <div class="mb-3">
+        <label for="latitude" class="form-label">Latitude</label>
+        <input
+          type="text"
+          class="form-control"
+          id="latitude"
+          aria-describedby="latitude"
+          name="latitude"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="longitude" class="form-label">Longitude</label>
+        <input
+          type="text"
+          class="form-control"
+          id="longitude"
+          aria-describedby="longitude"
+          name="longitude"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</section>
+
 <script src="/js/leaflet.js"></script>
 
 <script>
@@ -71,6 +71,46 @@
   // console.log("loop");
 
   get_pet_position(pet._id);
+
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const id = form.id.value;
+    const latitude = form.latitude.value;
+    const longitude = form.longitude.value;
+
+    try {
+      const response = await fetch("/pet-position", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          latitude,
+          longitude,
+        }),
+      });
+
+      location.reload(true);
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  (function () {
+    var el = document.getElementById("time-to-update");
+    var count = 30;
+    setInterval(function () {
+      count -= 1;
+      el.innerHTML = count;
+      if (count == 0) {
+        location.reload();
+      }
+    }, 1000);
+  })();
 
   // sleep(20000);
   // }
