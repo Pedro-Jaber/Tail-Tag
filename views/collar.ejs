@@ -1,0 +1,53 @@
+<section>
+  <div class="mt-5">
+    <form>
+      <div class="mb-3">
+        <label for="serialNumber" class="form-label">Serial Number</label>
+        <input
+          type="text"
+          class="form-control"
+          id="serialNumber"
+          aria-describedby="serialNumber"
+          name="serialNumber"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="$GPGGA" class="form-label">Gps Raw Data</label>
+        <input
+          type="text"
+          class="form-control"
+          id="$GPGGA"
+          aria-describedby="$GPGGA"
+          name="$GPGGA"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector("form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const serialNumber = form.serialNumber.value;
+    const $GPGGA = form.$GPGGA.value;
+
+    try {
+      const response = await fetch("/api/collar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          serialNumber,
+          $GPGGA,
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  });
+</script>

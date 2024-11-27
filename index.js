@@ -8,8 +8,9 @@ const dotenv = require("dotenv");
 const { connectDB } = require("./model/dataBase");
 const publiScapeRouters = require("./routers/public_space_routers");
 const userSpaceRouters = require("./routers/user_space_routers");
+const collarSpaceRouters = require("./routers/collar_space_routers");
 const authRouters = require("./routers/auth_routers");
-const { requireAuth } = require("./middleware/auth");
+const { requireAuth, checkCollarSerialNumber } = require("./middleware/auth");
 
 //* Dotenv
 dotenv.config();
@@ -37,6 +38,7 @@ app.use(cookieParser());
 //* Routes
 app.use(publiScapeRouters);
 app.use(authRouters);
+app.use("/api", checkCollarSerialNumber, collarSpaceRouters);
 app.use(requireAuth, userSpaceRouters);
 
 //* Routes Test ======================
@@ -62,7 +64,11 @@ app.post("/pet-position", async (req, res) => {
         _id: id,
       },
       {
-        $push: { latitude: latitude, longitude: longitude },
+        $push: {
+          "gpsData.time": time,
+          "gpsData.latitude": latitude,
+          "gpsData.longitude": longitude,
+        },
       }
     ).then(() => {
       //* Status 200 Updated
@@ -87,9 +93,11 @@ app.get("/pet-position/:id", async (req, res) => {
   res.status(200).json(data);
 });
 
-app.get("/pet-position-forms", (req, res) => {
-  res.status(200).render("pet_postion_forms");
+// Collar test [GET]
+app.get("/collar", (req, res) => {
+  res.status(200).render("collar");
 });
+
 //* ==================================
 
 //* Server Init
