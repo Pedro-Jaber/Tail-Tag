@@ -52,8 +52,9 @@
                 <div class="flex-grow-1">
                   <h5 class="card-title" id="pet-name">Buddy</h5>
 
-                  <p class="card-text mb-1">
-                    <strong>Last Seen:</strong> 5 mins ago
+                  <p class="card-text mb-1" id="pet-last-seen">
+                    <strong>Last Seen:</strong
+                    ><span id="span-last-seen"> 99 seconds ago </span>
                   </p>
                   <p class="card-text"><strong>Status:</strong> Active</p>
 
@@ -85,9 +86,25 @@
 
   user.pets.forEach((pet) => {
     getPet(pet.petId).then((data) => {
-      console.log(data);
+      // console.log(data);
       const petCard = document.getElementById(data._id);
       const petName = petCard.querySelector("#pet-name");
+      const pPetLastSeen = petCard.querySelector("#span-last-seen");
+
+      const updatedAtMillis = Date.parse(data.updatedAt);
+      const lastSeenSecs = Math.floor((Date.now() - updatedAtMillis) / 1000);
+
+      if (lastSeenSecs < 60) {
+        pPetLastSeen.textContent = ` ${lastSeenSecs} seconds ago`;
+      } else if (lastSeenSecs < 3600) {
+        pPetLastSeen.textContent = ` ${Math.floor(
+          lastSeenSecs / 60
+        )} minutes ago`;
+      } else if (lastSeenSecs < 86400) {
+        pPetLastSeen.textContent = ` ${Math.floor(
+          lastSeenSecs / 3600
+        )} hours ago`;
+      }
 
       petName.textContent = data.name;
 
