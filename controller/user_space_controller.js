@@ -15,7 +15,7 @@ module.exports.my_panel_get = async (req, res) => {
     pets: user.pets,
   };
   // console.log(user);
-  console.log(userToFront);
+  // console.log(userToFront);
 
   res.status(200).render("user_pages/my_panel", { user: userToFront });
 };
@@ -29,7 +29,7 @@ module.exports.my_pet_get = async (req, res) => {
     longitude: { $slice: -10 },
   });
 
-  console.log(pet);
+  //console.log(pet);
 
   res.status(200).render("my_pet", { pet });
 };
@@ -75,7 +75,7 @@ module.exports.get_a_pet_get = async (req, res) => {
 
   const pet = await Pet.findById(petId);
 
-  console.log(`pet: ${pet}`);
+  //console.log(`pet: ${pet}`);
 
   res.status(200).json(pet);
 };
