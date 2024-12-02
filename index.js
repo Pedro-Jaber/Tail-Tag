@@ -20,7 +20,7 @@ connectDB();
 
 //* App
 const app = express();
-const PORT = 5505; //TODO make as env variable
+const PORT = process.env.PORT || 5505;
 
 //* Public
 app.use(express.static("public"));
