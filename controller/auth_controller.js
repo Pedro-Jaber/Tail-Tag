@@ -76,10 +76,6 @@ const createAccessToken = (user) => {
 module.exports.signup_post = async (req, res) => {
   const { name, lastname, email, password } = req.body;
 
-  //TODO Remove before deployment
-  console.log(`User sign up`);
-  console.log(req.body);
-
   try {
     const user = await User.create({ name, lastname, email, password });
 
@@ -94,10 +90,6 @@ module.exports.signup_post = async (req, res) => {
 // login
 module.exports.login_post = async (req, res) => {
   const { email, password } = req.body;
-
-  //TODO Remove before deployment
-  console.log(`User login`);
-  console.log(req.body);
 
   try {
     const user = await User.login(email, password);
