@@ -44,15 +44,27 @@ module.exports.my_pet_edit_post = (req, res) => {
   res.status(200).render("my_pet_edit");
 };
 
+// add pet [GET]
+module.exports.add_pet_get = (req, res) => {
+  res.status(200).render("pet_pages/add_pet");
+};
+
 // add pet [POST]
 module.exports.add_pet_post = async (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
+
+  const name = req.body.name;
+  const birthdate = req.body.birthdate;
+  const serialNumber = req.body.serialNumber;
+  //const version = req.body.version; // TODO get from database??
 
   const pet = await Pet.create({
-    name: "Bolt",
-    birthdate: Date.parse("2013-04-10"),
-    latitude: [0],
-    longitude: [0],
+    name: name,
+    birthdate: birthdate,
+    collar: {
+      serialNumber: serialNumber,
+      version: "1.0",
+    },
   });
 
   const userId = req.decodedToken.context.user.id;
@@ -66,7 +78,7 @@ module.exports.add_pet_post = async (req, res) => {
     }
   );
 
-  res.status(200);
+  res.status(200).json({ status: 200, message: "created" });
 };
 
 // get a pet [GET]

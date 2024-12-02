@@ -1,0 +1,106 @@
+<div class="container mt-5">
+  <h1 class="mb-4">Add New Pet</h1>
+  <form id="add-pet-form">
+    <!-- Pet Name -->
+    <div class="mb-3">
+      <label for="pet-name" class="form-label">Pet Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="pet-name"
+        name="name"
+        placeholder="Enter pet's name"
+        required
+      />
+    </div>
+
+    <!-- Birthdate -->
+    <div class="mb-3">
+      <label for="pet-birthdate" class="form-label">Birthdate</label>
+      <input
+        type="date"
+        class="form-control"
+        id="pet-birthdate"
+        name="birthdate"
+      />
+    </div>
+
+    <!-- Collar Information -->
+    <h3 class="mt-4">Collar Information</h3>
+    <div class="mb-3">
+      <label for="collar-serial" class="form-label">Serial Number</label>
+      <input
+        type="text"
+        class="form-control"
+        id="collar-serial"
+        name="serialNumber"
+        placeholder="Enter collar serial number"
+        required
+      />
+    </div>
+    <!-- 
+    <div class="mb-3">
+      <label for="collar-version" class="form-label">Version</label>
+      <input
+        type="text"
+        class="form-control"
+        id="collar-version"
+        name="version"
+        placeholder="Enter collar version"
+        required
+      />
+    </div>
+    -->
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary mt-4">Add Pet</button>
+  </form>
+</div>
+
+<!-- Optional JavaScript for handling submission -->
+<script>
+  document
+    .getElementById("add-pet-form")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const petData = Object.fromEntries(formData.entries());
+
+      console.log(formData);
+      console.log(petData);
+
+      const name = petData.name;
+      const birthdate = petData.birthdate;
+      const collar = {
+        serialNumber: petData.serialNumber,
+        // version: petData.version,
+      };
+
+      console.log(name);
+      console.log(birthdate);
+      console.log(collar);
+
+      // TODO make validation
+
+      fetch("/add-pet", {
+        method: "POST",
+        body: JSON.stringify({
+          name,
+          birthdate,
+          collar,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.status == 200) {
+            location.assign("/my-panel");
+          } else {
+            // TODO show errors
+          }
+        });
+    });
+</script>
