@@ -15,9 +15,6 @@ const { requireAuth, checkCollarSerialNumber } = require("./middleware/auth");
 //* Dotenv
 dotenv.config();
 
-//* Connect to DB
-connectDB();
-
 //* App
 const app = express();
 const PORT = process.env.PORT || 5505;
@@ -101,11 +98,34 @@ app.get("/collar", (req, res) => {
 //* ==================================
 
 //* Server Init
-//TODO connect to database before start
-app.listen(PORT, () => {
-  console.log("┌─────────────────────────────┐");
-  console.log("│ Server:\x1b[92m Online \x1b[0m             │");
-  console.log(`│ Port: ${PORT}                  │`);
-  console.log(`│ link: http://localhost:${PORT} │`);
-  console.log("└─────────────────────────────┘");
+//* Connect to DB
+connectDB().then((something) => {
+  // console.log(something);
+
+  if (something.status === "ERROR") {
+    console.log("┌─────────────────────────────┐");
+    console.log("│ Server:\x1b[91m Offline \x1b[0m            │");
+    console.log(`│ Port: ${PORT}                  │`);
+    console.log(`│ link:                       │`);
+    console.log("└─────────────────────────────┘");
+
+    if (something.error.errorResponse != undefined) {
+      console.log(something.error.errorResponse.errmsg);
+    } else {
+      console.log(something.error);
+    }
+
+    process.exit(1);
+  }
+
+  console.log("Database connected");
+  console.log(something.conn.connection.host);
+
+  app.listen(PORT, () => {
+    console.log("┌─────────────────────────────┐");
+    console.log("│ Server:\x1b[92m Online \x1b[0m             │");
+    console.log(`│ Port: ${PORT}                  │`);
+    console.log(`│ link: http://localhost:${PORT} │`);
+    console.log("└─────────────────────────────┘");
+  });
 });
