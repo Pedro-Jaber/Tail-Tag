@@ -1,5 +1,3 @@
-//TODO change res.status(201).json({ user: user._id }); to flag
-
 const User = require("../model/model_user");
 const jwt = require("jsonwebtoken");
 
@@ -49,7 +47,6 @@ const handleErrors = (err) => {
 
 // create json web token
 const createAccessToken = (user) => {
-  //TODO add user roles list
   return jwt.sign(
     {
       iss: "Pet Radar",
@@ -104,9 +101,7 @@ module.exports.login_post = async (req, res) => {
 };
 
 // admin login
-module.exports.admin_login_post = (req, res) => {
-  //TODO login admin user
-};
+module.exports.admin_login_post = (req, res) => {};
 
 // log out
 module.exports.logout_get = (req, res) => {

@@ -80,7 +80,7 @@
       console.log(birthdate);
       console.log(collar);
 
-      // TODO make validation
+      // make validation
 
       fetch("/add-pet", {
         method: "POST",
@@ -99,7 +99,7 @@
           if (data.status == 200) {
             location.assign("/my-panel");
           } else {
-            // TODO show errors
+            // show errors
           }
         });
     });

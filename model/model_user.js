@@ -5,9 +5,6 @@ const bcrypt = require("bcrypt");
 
 const saltRounds = 10;
 
-//TODO add user roles list
-//admin, normal user
-
 const UserSchema = new Schema(
   {
     name: {

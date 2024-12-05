@@ -24,7 +24,6 @@ module.exports.my_panel_get = async (req, res) => {
 module.exports.my_pet_get = async (req, res) => {
   const petId = req.params.id;
 
-  //TODO arrumar para usar o novo schema
   const pet = await Pet.findById(petId, {
     latitude: { $slice: -10 },
     longitude: { $slice: -10 },
