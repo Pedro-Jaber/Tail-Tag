@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const PetSchema = new Schema(
   {
     name: String,
-    birthdate: Date,
+    birthdate: String, // yyyy-MM-dd
     collar: {
       serialNumber: String,
       version: String,

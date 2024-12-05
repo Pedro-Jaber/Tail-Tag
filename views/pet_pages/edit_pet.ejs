@@ -1,0 +1,87 @@
+<div class="container">
+  <a href="/my-panel" class="btn btn-primary mt-3">Voltar</a>
+</div>
+
+<div class="container mt-5">
+  <h1 class="mb-4">Editar Pet</h1>
+  <form id="update-pet-form">
+    <!-- Pet Name -->
+    <div class="mb-3">
+      <label for="pet-name" class="form-label">Nome</label>
+      <input
+        type="text"
+        class="form-control"
+        id="pet-name"
+        name="name"
+        placeholder="Enter pet's name"
+      />
+    </div>
+
+    <!-- Birthdate -->
+    <div class="mb-3">
+      <label for="pet-birthdate" class="form-label">Aniversário</label>
+      <input
+        type="date"
+        class="form-control"
+        id="pet-birthdate"
+        name="birthdate"
+      />
+    </div>
+
+    <!-- Collar Information -->
+    <div class="mb-3">
+      <label for="collar-serial" class="form-label"
+        >Número de Série da Coleira</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="collar-serial"
+        name="collar_serialNumber"
+        placeholder="Enter collar serial number"
+      />
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary mt-4">Atualizar</button>
+  </form>
+</div>
+
+<!-- JavaScript for Handling Updates -->
+<%- include("../partials/getPet.ejs") %>
+<script>
+  // Prefill the form with existing pet data
+  document.addEventListener("DOMContentLoaded", () => {
+    const pet_name = document.getElementById("pet-name");
+    const pet_birthdate = document.getElementById("pet-birthdate");
+    const collar_serial = document.getElementById("collar-serial");
+
+    pet_name.value = pet.name ? pet.name : "";
+    pet_birthdate.value = pet.birthdate ? pet.birthdate : "";
+    collar_serial.value = pet.collar.serialNumber
+      ? pet.collar.serialNumber
+      : "";
+  });
+
+  // Handle form submission
+  const form = document.getElementById("update-pet-form");
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const updatedPet = Object.fromEntries(formData.entries());
+
+    // API call to update pet in the backend
+    fetch(`/pet/${pet._id}/edit`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedPet),
+    }).then((response) => {
+      if (response.status === 200) {
+        location.reload();
+      } else {
+        alert("Failed to update pet.");
+      }
+    });
+  });
+</script>

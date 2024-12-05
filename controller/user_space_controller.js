@@ -24,6 +24,7 @@ module.exports.my_panel_get = async (req, res) => {
 module.exports.my_pet_get = async (req, res) => {
   const petId = req.params.id;
 
+  //TODO arrumar para usar o novo schema
   const pet = await Pet.findById(petId, {
     latitude: { $slice: -10 },
     longitude: { $slice: -10 },
@@ -86,6 +87,57 @@ module.exports.add_pet_post = async (req, res) => {
     },
     {
       $push: { pets: { petId: pet._id } },
+    }
+  );
+
+  res.status(200).json({ status: 200, message: "created" });
+};
+
+// edit pet [GET]
+module.exports.edit_pet_get = async (req, res) => {
+  const petId = req.params.id;
+
+  const pet = await Pet.findById(petId);
+
+  res.status(200).render("pet_pages/edit_pet", { pet });
+};
+
+// edit pet [POST]
+module.exports.edit_pet_post = async (req, res) => {
+  const userId = req.decodedToken.context.user.id;
+  const petId = req.params.id;
+
+  // Verify if pet belongs to user
+  let user;
+  try {
+    user = await User.findOne({
+      _id: userId,
+      pets: { $elemMatch: { petId: petId } },
+    });
+  } catch (error) {
+    user = null;
+    console.log(error);
+  }
+
+  if (!user) {
+    res.status(400).json({ status: 400, message: "bad request" });
+    return;
+  }
+
+  console.log(req.body);
+
+  await Pet.updateOne(
+    {
+      _id: petId,
+    },
+    {
+      $set: {
+        name: req.body.name,
+        birthdate: req.body.birthdate,
+        collar: {
+          serialNumber: req.body.collar_serialNumber,
+        },
+      },
     }
   );
 
