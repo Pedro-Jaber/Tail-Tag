@@ -44,6 +44,17 @@ module.exports.my_pet_edit_post = (req, res) => {
   res.status(200).render("my_pet_edit");
 };
 
+// get a pet [GET]
+module.exports.get_a_pet_get = async (req, res) => {
+  const petId = req.params.id;
+
+  const pet = await Pet.findById(petId);
+
+  //console.log(`pet: ${pet}`);
+
+  res.status(200).json(pet);
+};
+
 // add pet [GET]
 module.exports.add_pet_get = (req, res) => {
   res.status(200).render("pet_pages/add_pet");
@@ -79,15 +90,4 @@ module.exports.add_pet_post = async (req, res) => {
   );
 
   res.status(200).json({ status: 200, message: "created" });
-};
-
-// get a pet [GET]
-module.exports.get_a_pet_get = async (req, res) => {
-  const petId = req.params.id;
-
-  const pet = await Pet.findById(petId);
-
-  //console.log(`pet: ${pet}`);
-
-  res.status(200).json(pet);
 };
