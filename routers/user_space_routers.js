@@ -14,4 +14,6 @@ router.post("/add-pet", userSpaceController.add_pet_post);
 router.get("/pet/:id/edit", userSpaceController.edit_pet_get);
 router.put("/pet/:id/edit", userSpaceController.edit_pet_post);
 
+router.delete("/pet/:id/delete", userSpaceController.delete_pet_delete);
+
 module.exports = router;

@@ -142,3 +142,41 @@ module.exports.edit_pet_post = async (req, res) => {
 
   res.status(200).json({ status: 200, message: "created" });
 };
+
+// delete pet [DELETE]
+module.exports.delete_pet_delete = async (req, res) => {
+  const userId = req.decodedToken.context.user.id;
+  const petId = req.params.id;
+
+  // Verify if pet belongs to user
+  let user;
+  try {
+    user = await User.findOne({
+      _id: userId,
+      pets: { $elemMatch: { petId: petId } },
+    });
+  } catch (error) {
+    user = null;
+    console.log(error);
+  }
+
+  if (!user) {
+    res.status(400).json({ status: 400, message: "bad request" });
+    return;
+  }
+
+  // Delete pet
+  await Pet.deleteOne({ _id: petId });
+
+  // Remove pet from user
+  await User.updateOne(
+    {
+      _id: userId,
+    },
+    {
+      $pull: { pets: { petId: petId } },
+    }
+  );
+
+  res.status(200).json({ status: 200, message: "deleted" });
+};

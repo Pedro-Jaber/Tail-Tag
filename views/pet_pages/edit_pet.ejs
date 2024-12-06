@@ -1,5 +1,20 @@
 <div class="container">
-  <a href="/my-panel" class="btn btn-primary mt-3">Voltar</a>
+  <a href="/my-panel" class="btn btn-primary mt-3">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-arrow-left"
+      viewBox="0 0 16 16"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+      />
+    </svg>
+    Voltar
+  </a>
 </div>
 
 <div class="container mt-5">
@@ -41,10 +56,51 @@
         placeholder="Enter collar serial number"
       />
     </div>
-
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary mt-4">Atualizar</button>
   </form>
+  <div class="d-flex justify-content-between">
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      form="update-pet-form"
+      class="btn btn-primary mt-4"
+      id="update-pet-button"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-arrow-repeat"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"
+        />
+        <path
+          fill-rule="evenodd"
+          d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"
+        />
+      </svg>
+      Atualizar
+    </button>
+
+    <!-- Delete Button -->
+    <button type="button" class="btn btn-danger mt-4" id="delete-pet-button">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-trash-fill"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"
+        />
+      </svg>
+      Deletar
+    </button>
+  </div>
 </div>
 
 <!-- JavaScript for Handling Updates -->
@@ -81,6 +137,20 @@
         location.reload();
       } else {
         alert("Failed to update pet.");
+      }
+    });
+  });
+
+  // Handle delete button click
+  const deleteButton = document.getElementById("delete-pet-button");
+  deleteButton.addEventListener("click", () => {
+    fetch(`/pet/${pet._id}/delete`, {
+      method: "DELETE",
+    }).then((response) => {
+      if (response.status === 200) {
+        location.href = "/my-panel";
+      } else {
+        alert("Failed to delete pet.");
       }
     });
   });
