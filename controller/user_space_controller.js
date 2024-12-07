@@ -32,6 +32,14 @@ module.exports.my_panel_get = async (req, res) => {
 
   //gets user from database
   const user = await User.findById(userId);
+
+  // User not found
+  if (!user) {
+    res.cookie("jwt", "", { maxAge: 1 });
+    res.status(400).redirect("/400");
+    return;
+  }
+
   const userToFront = {
     id: user._id,
     name: user.name,
@@ -50,6 +58,13 @@ module.exports.profile_get = async (req, res) => {
   // RAW user
   const userId = req.decodedToken.context.user.id;
   const user = await User.findById(userId);
+
+  // User not found
+  if (!user) {
+    res.cookie("jwt", "", { maxAge: 1 });
+    res.status(400).redirect("/400");
+    return;
+  }
 
   // Filtered user
   const userToFront = {
@@ -149,6 +164,12 @@ module.exports.my_pet_get = async (req, res) => {
     longitude: { $slice: -10 },
   });
 
+  // Pet not found
+  if (!pet) {
+    res.status(400).redirect("/400");
+    return;
+  }
+
   //console.log(pet);
 
   res.status(200).render("my_pet", { pet });
@@ -169,6 +190,12 @@ module.exports.get_a_pet_get = async (req, res) => {
   const petId = req.params.id;
 
   const pet = await Pet.findById(petId);
+
+  // Pet not found
+  if (!pet) {
+    res.status(400).json({ status: 400, message: "bad request" });
+    return;
+  }
 
   //console.log(`pet: ${pet}`);
 
@@ -217,6 +244,12 @@ module.exports.edit_pet_get = async (req, res) => {
   const petId = req.params.id;
 
   const pet = await Pet.findById(petId);
+
+  // Pet not found
+  if (!pet) {
+    res.status(404).redirect("/404");
+    return;
+  }
 
   res.status(200).render("pet_pages/edit_pet", { pet });
 };
