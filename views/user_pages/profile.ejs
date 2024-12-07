@@ -1,5 +1,5 @@
 <div class="container">
-  <a href="/my-panel" class="btn btn-primary mt-3">
+  <a href="/user/my-panel" class="btn btn-primary mt-3">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -314,7 +314,7 @@
     console.log("Updated User Data:", userData);
 
     // Example API call to update user data
-    fetch(`/profile`, {
+    fetch(`/user/profile`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData),
@@ -330,7 +330,7 @@
   // Handle form submission
   const deleteButton = document.getElementById("delete-profile-button");
   deleteButton.addEventListener("click", () => {
-    fetch(`/profile`, {
+    fetch(`/user/profile`, {
       method: "DELETE",
     }).then((response) => {
       if (response.status === 200) {

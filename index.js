@@ -36,7 +36,7 @@ app.use(cookieParser());
 app.use(publiScapeRouters);
 app.use(authRouters);
 app.use("/api", checkCollarSerialNumber, collarSpaceRouters);
-app.use(requireAuth, userSpaceRouters);
+app.use("/user", requireAuth, userSpaceRouters);
 
 //* Routes Test ======================
 const Pet = require("./model/model_pet");

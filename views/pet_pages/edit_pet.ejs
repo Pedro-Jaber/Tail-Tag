@@ -1,5 +1,5 @@
 <div class="container">
-  <a href="/my-panel" class="btn btn-primary mt-3">
+  <a href="/user/my-panel" class="btn btn-primary mt-3">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -128,7 +128,7 @@
     const updatedPet = Object.fromEntries(formData.entries());
 
     // API call to update pet in the backend
-    fetch(`/pet/${pet._id}/edit`, {
+    fetch(`/user/pet/${pet._id}/edit`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedPet),
@@ -144,11 +144,11 @@
   // Handle delete button click
   const deleteButton = document.getElementById("delete-pet-button");
   deleteButton.addEventListener("click", () => {
-    fetch(`/pet/${pet._id}/delete`, {
+    fetch(`/user/pet/${pet._id}/delete`, {
       method: "DELETE",
     }).then((response) => {
       if (response.status === 200) {
-        location.href = "/my-panel";
+        location.href = "/user/my-panel";
       } else {
         alert("Failed to delete pet.");
       }
