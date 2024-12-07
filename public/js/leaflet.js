@@ -14,7 +14,7 @@ async function get_pet_position(pet_id) {
       '&copy; OSM Mapnik <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }).addTo(map);
 
-  fetch(`/pet-position/${pet_id}`)
+  fetch(`/user/pet-position/${pet_id}`)
     .then((response) => {
       return response.json();
     })

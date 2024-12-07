@@ -176,6 +176,15 @@ module.exports.get_a_pet_get = async (req, res) => {
   res.status(200).json(pet);
 };
 
+module.exports.pet_position_get = async (req, res) => {
+  const data = await Pet.findById(req.params.id, {
+    latitude: { $slice: -10 },
+    longitude: { $slice: -10 },
+  });
+
+  res.status(200).json(data);
+};
+
 // Add pet [GET]
 module.exports.add_pet_get = (req, res) => {
   res.status(200).render("pet_pages/add_pet");

@@ -11,6 +11,7 @@ router.delete("/profile", userSpaceController.profile_delete);
 
 // Pet
 router.get("/get-a-pet/:id", userSpaceController.get_a_pet_get); // API
+router.get("/pet-position/:id", userSpaceController.pet_position_get); // API
 
 router.get("/add-pet", userSpaceController.add_pet_get);
 router.post("/add-pet", userSpaceController.add_pet_post);
