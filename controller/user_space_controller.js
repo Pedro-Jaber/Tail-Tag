@@ -26,7 +26,9 @@ function removeEmptyKeysFromJSON(jsonObj) {
   }
 }
 
-// user panel
+// * User
+
+// User panel
 module.exports.my_panel_get = async (req, res) => {
   const userId = req.decodedToken.context.user.id;
 
@@ -155,37 +157,9 @@ module.exports.profile_delete = async (req, res) => {
   }
 };
 
-// pet profile
-module.exports.my_pet_get = async (req, res) => {
-  const petId = req.params.id;
+// * Pet
 
-  const pet = await Pet.findById(petId, {
-    latitude: { $slice: -10 },
-    longitude: { $slice: -10 },
-  });
-
-  // Pet not found
-  if (!pet) {
-    res.status(400).redirect("/400");
-    return;
-  }
-
-  //console.log(pet);
-
-  res.status(200).render("my_pet", { pet });
-};
-
-// pet edit profile [GET]
-module.exports.my_pet_edit_get = (req, res) => {
-  res.status(200).render("my_pet_edit");
-};
-
-// pet edit profile [POST]
-module.exports.my_pet_edit_post = (req, res) => {
-  res.status(200).render("my_pet_edit");
-};
-
-// get a pet [GET]
+// Get a pet [GET] || API || Used in my panel
 module.exports.get_a_pet_get = async (req, res) => {
   const petId = req.params.id;
 
@@ -202,12 +176,12 @@ module.exports.get_a_pet_get = async (req, res) => {
   res.status(200).json(pet);
 };
 
-// add pet [GET]
+// Add pet [GET]
 module.exports.add_pet_get = (req, res) => {
   res.status(200).render("pet_pages/add_pet");
 };
 
-// add pet [POST]
+// Add pet [POST]
 module.exports.add_pet_post = async (req, res) => {
   //console.log(req.body);
 
@@ -239,7 +213,27 @@ module.exports.add_pet_post = async (req, res) => {
   res.status(200).json({ status: 200, message: "created" });
 };
 
-// edit pet [GET]
+// Pet profile [GET]
+module.exports.pet_profile_get = async (req, res) => {
+  const petId = req.params.id;
+
+  const pet = await Pet.findById(petId, {
+    latitude: { $slice: -10 },
+    longitude: { $slice: -10 },
+  });
+
+  // Pet not found
+  if (!pet) {
+    res.status(400).redirect("/400");
+    return;
+  }
+
+  //console.log(pet);
+
+  res.status(200).render("pet_pages/pet_profile", { pet });
+};
+
+// Edit pet [GET]
 module.exports.edit_pet_get = async (req, res) => {
   const petId = req.params.id;
 
@@ -254,8 +248,8 @@ module.exports.edit_pet_get = async (req, res) => {
   res.status(200).render("pet_pages/edit_pet", { pet });
 };
 
-// edit pet [POST]
-module.exports.edit_pet_post = async (req, res) => {
+// Edit pet [PUT]
+module.exports.edit_pet_put = async (req, res) => {
   const userId = req.decodedToken.context.user.id;
   const petId = req.params.id;
 
@@ -296,7 +290,7 @@ module.exports.edit_pet_post = async (req, res) => {
   res.status(200).json({ status: 200, message: "created" });
 };
 
-// delete pet [DELETE]
+// Delete pet [DELETE]
 module.exports.delete_pet_delete = async (req, res) => {
   const userId = req.decodedToken.context.user.id;
   const petId = req.params.id;
