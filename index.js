@@ -10,7 +10,11 @@ const publiScapeRouters = require("./routers/public_space_routers");
 const userSpaceRouters = require("./routers/user_space_routers");
 const collarSpaceRouters = require("./routers/collar_space_routers");
 const authRouters = require("./routers/auth_routers");
-const { requireAuth, checkCollarSerialNumber } = require("./middleware/auth");
+const {
+  requireAuth,
+  checkUser,
+  checkCollarSerialNumber,
+} = require("./middleware/auth");
 
 //* Dotenv
 dotenv.config();
@@ -33,6 +37,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 //* Routes
+app.use("*", checkUser);
 app.use(publiScapeRouters);
 app.use(authRouters);
 app.use("/api", checkCollarSerialNumber, collarSpaceRouters);

@@ -1,23 +1,44 @@
 const jwt = require("jsonwebtoken");
 const Pet = require("../model/model_pet");
+const e = require("express");
 
 module.exports.requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
-  if (!token) {
-    return res.redirect("/login");
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, _) => {
+      if (err) {
+        console.error(err.message);
+        res.redirect("/login");
+      } else {
+        next();
+      }
+    });
+  } else {
+    res.redirect("/login");
   }
+};
 
-  try {
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    req.decodedToken = decodedToken;
+module.exports.checkUser = async (req, res, next) => {
+  const token = req.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+      if (err) {
+        console.error(err.message);
+        req.decodedToken = null;
+        res.locals.user = null;
+        next();
+      } else {
+        req.decodedToken = decodedToken;
+        res.locals.user = decodedToken;
+        next();
+      }
+    });
+  } else {
+    res.decodedToken = null;
+    res.local.user = null;
     next();
-  } catch (error) {
-    if (error.name === "JsonWebTokenError") {
-      return res.redirect("/login");
-    }
-
-    console.log(error);
-    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
