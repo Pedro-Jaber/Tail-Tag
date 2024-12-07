@@ -1,6 +1,31 @@
 const User = require("../model/model_user");
 const Pet = require("../model/model_pet");
 
+function removeEmptyKeysFromJSON(jsonObj) {
+  // Remove empty keys
+  for (let key in jsonObj) {
+    if (
+      jsonObj[key] === "" ||
+      jsonObj[key] === null ||
+      jsonObj[key] === undefined
+    ) {
+      delete jsonObj[key]; // Delete the key with an empty string value
+    } else if (typeof jsonObj[key] === "object" && jsonObj[key] !== null) {
+      // Recursively handle nested objects or arrays
+      removeEmptyKeysFromJSON(jsonObj[key]);
+    }
+  }
+
+  // Remove empty objects
+  for (let key in jsonObj) {
+    if (typeof jsonObj[key] === "object") {
+      if (Object.keys(jsonObj[key]).length === 0) {
+        delete jsonObj[key];
+      }
+    }
+  }
+}
+
 // user panel
 module.exports.my_panel_get = async (req, res) => {
   const userId = req.decodedToken.context.user.id;
@@ -18,6 +43,65 @@ module.exports.my_panel_get = async (req, res) => {
   // console.log(userToFront);
 
   res.status(200).render("user_pages/my_panel", { user: userToFront });
+};
+
+// Profile [GET]
+module.exports.profile_get = async (req, res) => {
+  // RAW user
+  const userId = req.decodedToken.context.user.id;
+  const user = await User.findById(userId);
+
+  // Filtered user
+  const userToFront = {
+    id: user._id,
+    name: user.name,
+    lastname: user.lastname,
+    email: user.email,
+    cpf: user.cpf,
+    address: user.address,
+    phone_number: user.phone_number,
+  };
+
+  // console.log(userToFront);
+
+  res.status(200).render("user_pages/profile", { user: userToFront });
+};
+
+// Profile [PUT]
+module.exports.profile_put = async (req, res) => {
+  let user = {
+    name: req.body.name,
+    lastname: req.body.lastname,
+    email: req.body.email,
+    cpf: req.body.cpf,
+    address: {
+      street: req.body.address_street,
+      number: req.body.address_number,
+      city: req.body.address_city,
+      state: req.body.address_state,
+      country: req.body.address_country,
+      zip_code: req.body.address_zip_code,
+    },
+    phone_number: req.body.phone_number,
+  };
+  removeEmptyKeysFromJSON(user);
+
+  // console.log(user);
+
+  try {
+    await User.updateOne(
+      {
+        _id: req.decodedToken.context.user.id,
+      },
+      {
+        $set: user,
+      }
+    );
+    res.status(200).json({ status: 200, message: "updated" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: 500, message: "Internal Server Error" });
+  }
 };
 
 // pet profile

@@ -1,0 +1,306 @@
+<div class="container">
+  <a href="/my-panel" class="btn btn-primary mt-3">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      class="bi bi-arrow-left"
+      viewBox="0 0 16 16"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+      />
+    </svg>
+    Voltar
+  </a>
+</div>
+
+<div class="container mt-5">
+  <h1 class="mb-4">Perfil</h1>
+  <form id="user-profile-form">
+    <!-- Personal Information -->
+    <h3>Informações Pessoais</h3>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="first-name" class="form-label">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="first-name"
+          name="name"
+          required
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="last-name" class="form-label">Sobrenome</label>
+        <input
+          type="text"
+          class="form-control"
+          id="last-name"
+          name="lastname"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        readonly
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="phone-number" class="form-label">Número de Telefone</label>
+      <input
+        type="tel"
+        class="form-control"
+        id="phone-number"
+        name="phone_number"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="cpf" class="form-label">CPF</label>
+      <input
+        type="text"
+        class="form-control"
+        id="cpf"
+        name="cpf"
+        placeholder="123.456.789-00"
+      />
+    </div>
+
+    <!-- Address Information -->
+    <h3>Endereço</h3>
+    <div class="mb-3">
+      <label for="street" class="form-label">Rua</label>
+      <input
+        type="text"
+        class="form-control"
+        id="street"
+        name="address_street"
+      />
+    </div>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label for="number" class="form-label">Número</label>
+        <input
+          type="text"
+          class="form-control"
+          id="number"
+          name="address_number"
+        />
+      </div>
+      <div class="col-md-4">
+        <label for="city" class="form-label">Cidade</label>
+        <input type="text" class="form-control" id="city" name="address_city" />
+      </div>
+      <div class="col-md-4">
+        <label for="state" class="form-label">Estado</label>
+        <input
+          type="text"
+          class="form-control"
+          id="state"
+          name="address_state"
+        />
+      </div>
+    </div>
+    <div class="row g-3 mt-3">
+      <div class="col-md-6">
+        <label for="country" class="form-label">País</label>
+        <input
+          type="text"
+          class="form-control"
+          id="country"
+          name="address_country"
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="zip-code" class="form-label">CEP</label>
+        <input
+          type="text"
+          class="form-control"
+          id="zip-code"
+          name="address_zip_code"
+        />
+      </div>
+    </div>
+
+    <!-- Password Update -->
+    <h3 class="mt-4">Alterar senha</h3>
+    <span class="text-warning">
+      <strong>Caso queira alterar a senha, preencha os campos abaixo</strong>
+    </span>
+
+    <div>
+      <p>
+        A senha deve conter pelo menos: <br />
+        - 6 caracteres <br />
+        - uma letra maiúscula <br />
+        - uma letra minúscula <br />
+        - um número <br />
+        - um caractere especial <br />
+      </p>
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Nova Senha</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        name="password"
+      />
+      <div class="password error"></div>
+    </div>
+    <div class="mb-3">
+      <label for="confirm-password" class="form-label">Confirmar Senha</label>
+      <input
+        type="password"
+        class="form-control"
+        id="confirm-password"
+        name="confirm_password"
+      />
+      <div class="confirm-password error"></div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary mt-4">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-arrow-repeat"
+        viewBox="0 0 16 16"
+      >
+        <path
+          d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"
+        />
+        <path
+          fill-rule="evenodd"
+          d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"
+        />
+      </svg>
+      Atualizar
+    </button>
+  </form>
+</div>
+
+<!-- JavaScript for Form Handling -->
+<%- include("../partials/getUser.ejs") %>
+<script>
+  // Prefill the form with existing user data
+  document.addEventListener("DOMContentLoaded", () => {
+    const name = document.getElementById("first-name");
+    const lastname = document.getElementById("last-name");
+    const email = document.getElementById("email");
+    const phone_number = document.getElementById("phone-number");
+    const cpf = document.getElementById("cpf");
+    const street = document.getElementById("street");
+    const number = document.getElementById("number");
+    const city = document.getElementById("city");
+    const state = document.getElementById("state");
+    const country = document.getElementById("country");
+    const zip_code = document.getElementById("zip-code");
+
+    name.value = user.name ? user.name : "";
+    lastname.value = user.lastname ? user.lastname : "";
+    email.value = user.email ? user.email : "";
+    phone_number.value = user.phone_number ? user.phone_number : "";
+    cpf.value = user.cpf ? user.cpf : "";
+    street.value = user.address.street ? user.address.street : "";
+    number.value = user.address.number ? user.address.number : "";
+    city.value = user.address.city ? user.address.city : "";
+    state.value = user.address.state ? user.address.state : "";
+    country.value = user.address.country ? user.address.country : "";
+    zip_code.value = user.address.zip_code ? user.address.zip_code : "";
+  });
+
+  // Handle form submission
+  const form = document.getElementById("user-profile-form");
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const userData = Object.fromEntries(formData.entries());
+
+    // Regex to validate password
+    const validations = [
+      {
+        regex: /(?=.*[a-z])/,
+        message: " - A senha colocada não contem nehuma letra minúscula",
+      },
+      {
+        regex: /(?=.*[A-Z])/,
+        message: " - A senha colocada não contem nehuma letra maiúscula",
+      },
+      {
+        regex: /(?=.*\d)/,
+        message: " - A senha colocada não contem nehum número",
+      },
+      {
+        regex: /[@$!%*?&]/,
+        message: " - A senha colocada não contem nehum caracter especial",
+      },
+      {
+        regex: /(?=.{6,})/,
+        message: " - A senha colocada tem menos de 6 caracteres",
+      },
+    ];
+
+    // console.log(userData);
+
+    if (userData.confirm_password !== "") {
+      // Validate password with regex
+      let erorr_messages = [];
+      const passwordError = document.querySelector(".password.error");
+      const verifyPasswordError = document.querySelector(
+        ".confirm-password.error"
+      );
+
+      for (const validation of validations) {
+        if (!validation.regex.test(userData.password)) {
+          erorr_messages.push(validation.message);
+        }
+      }
+
+      // Show password errors
+      if (erorr_messages.length > 0) {
+        passwordError.innerHTML = erorr_messages.join("<br/>");
+        return;
+      }
+
+      // Check if password and confirm-password are equal
+      if (userData.password !== userData.confirm_password) {
+        verifyPasswordError.textContent = "As senhas são diferentes";
+        return;
+      }
+    } else {
+      delete userData.password;
+      delete userData.confirm_password;
+    }
+
+    console.log("Updated User Data:", userData);
+
+    // Example API call to update user data
+    fetch(`/profile`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    }).then((response) => {
+      if (response.status === 200) {
+        location.reload();
+      } else {
+        alert("Failed to update profile.");
+      }
+    });
+  });
+</script>
