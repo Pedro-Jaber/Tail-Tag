@@ -104,6 +104,42 @@ module.exports.profile_put = async (req, res) => {
   }
 };
 
+// Profile [DELETE]
+module.exports.profile_delete = async (req, res) => {
+  const userId = req.decodedToken.context.user.id;
+
+  console.log("Delete User: " + userId);
+
+  try {
+    //* Logout user;
+    res.cookie("jwt", "", { maxAge: 1 });
+
+    //* Delete Pets
+    const userPetsList = await User.findById(userId, {
+      pets: { petId: 1 },
+    });
+    // console.log(userPetsList.pets);
+
+    userPetsList.pets.forEach(async (pet) => {
+      // console.log(pet.petId);
+      await User.updateOne(
+        { _id: userId },
+        { $pull: { pets: { petId: pet.petId } } }
+      );
+      await Pet.deleteOne({ _id: pet.petId });
+    });
+
+    //* Delete user
+    await User.deleteOne({ _id: userId });
+
+    //* Rsponse
+    res.status(200).json({ status: 200, message: "deleted" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: 500, message: "Internal Server Error" });
+  }
+};
+
 // pet profile
 module.exports.my_pet_get = async (req, res) => {
   const petId = req.params.id;
