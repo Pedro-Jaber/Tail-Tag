@@ -22,12 +22,12 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <!--TODO Header -->
     <%- include("../partials/header.ejs") %>
 
     <!--* Main -->
-    <main><%- body %></main>
+    <main class="flex-grow-1"><%- body %></main>
 
     <!--TODO Footer -->
     <%- include("../partials/footer.ejs") %>
