@@ -1,12 +1,53 @@
-<!--TODO verify if user is logged in and change from "Login" to "Log out"-->
-<div class="my-3 d-flex justify-content-evenly">
-  <a href="/">Home</a>
-  <a href="/about">About</a>
-  <a href="/contact">Contact</a>
+<nav class="navbar sticky-top navbar-expand-sm bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Tail Tag</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarTogglerDemo02"
+      aria-controls="navbarTogglerDemo02"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
 
-  <a href="/user/my-panel">Painel</a>
+        <!--         
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li> 
+        -->
 
-  <a href="/signup">Sing up</a>
-  <a href="/login">Login</a>
-  <a href="/logout">Log out</a>
-</div>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Contact</a>
+        </li>
+      </ul>
+      <div class="d-flex gap-3">
+        <% if (user) { %>
+
+        <a class="btn" href="/logout" role="button">Log out</a>
+        <a class="btn btn-primary" href="/user/my-panel" role="button"
+          >Painel</a
+        >
+
+        <% } else { %>
+
+        <a class="btn btn-outline-primary" href="/signup" role="button"
+          >Sing up</a
+        >
+        <a class="btn btn-primary" href="/login" role="button">Login</a>
+
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
