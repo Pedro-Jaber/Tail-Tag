@@ -37,7 +37,7 @@ module.exports.checkUser = async (req, res, next) => {
     });
   } else {
     res.decodedToken = null;
-    res.local.user = null;
+    res.locals.user = null;
     next();
   }
 };
