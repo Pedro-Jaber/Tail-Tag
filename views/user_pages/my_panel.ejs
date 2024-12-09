@@ -137,7 +137,9 @@
       const updatedAtMillis = Date.parse(data.updatedAt);
       const lastSeenSecs = Math.floor((Date.now() - updatedAtMillis) / 1000);
 
-      if (lastSeenSecs < 60) {
+      if (lastSeenSecs < 0) {
+        pPetLastSeen.textContent = " 0 seconds ago";
+      } else if (lastSeenSecs < 60) {
         pPetLastSeen.textContent = ` ${lastSeenSecs} seconds ago`;
       } else if (lastSeenSecs < 3600) {
         pPetLastSeen.textContent = ` ${Math.floor(
