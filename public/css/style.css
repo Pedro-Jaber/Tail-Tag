@@ -90,10 +90,17 @@ body {
 }
 
 .map {
-  width: 50vw;
-  height: 50vh;
+  min-width: 50vw;
+  min-height: 50vh;
 
   border-radius: 14px;
+}
+
+@media (max-width: 768px) {
+  .map {
+    border-radius: 0 0 14px 14px;
+    min-width: 100vw;
+  }
 }
 
 .map-div {

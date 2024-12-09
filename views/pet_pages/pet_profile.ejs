@@ -9,17 +9,125 @@
   crossorigin=""
 ></script>
 
-<section class="main-box mt-5 mx-auto">
-  <div class="map-div">
-    <div id="map" class="map"></div>
-  </div>
+<div class="container">
+  <div class="row mt-0 mt-md-5">
+    <div class="col-md-4 d-none d-md-block">
+      <section>
+        <div class="d-flex justify-content-center mb-3">
+          <div
+            class="d-flex justify-content-center"
+            style="width: auto; height: 250px; aspect-ratio: 1 / 1"
+          >
+            <img
+              src="/images/dog-photo.jpg"
+              alt="Dog Photo"
+              class="rounded-circle img-fluid object-fit-cover"
+            />
+          </div>
+        </div>
+        <div>
+          <h1 class="mt-3"><%- pet.name %></h1>
+          <div>
+            <div>
+              <span class="fw-bold">Aniversário:</span>
+              <span><%- pet.birthdate %></span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3">
+          <h2>Coleira</h2>
+          <div>
+            <div>
+              <span class="fw-bold">Número Serial:</span>
+              <span><%- pet.collar.serialNumber %></span>
+            </div>
+            <div>
+              <span class="fw-bold">Versão:</span>
+              <span><%- pet.collar.version %></span>
+            </div>
+          </div>
+        </div>
 
-  <div class="text-center mt-3">
-    <span>Auto update in:</span>
-    <span id="time-to-update"></span>
-    <span>s</span>
+        <div class="mt-3">
+          <a
+            href="/user/pet/<%= pet._id %>/edit"
+            class="btn btn-warning btn-sm"
+            role="button"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-pencil-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"
+              />
+            </svg>
+            Editar
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <div class="col-md-8 align-items-stretch">
+      <div class="d-flex h-100 flex-column">
+        <section class="d-flex flex-column">
+          <div class="map-div m-0 align-self-stretch">
+            <div id="map" class="map"></div>
+          </div>
+
+          <div class="text-center mt-3 mb-0">
+            <span>Auto update in:</span>
+            <span id="time-to-update"></span>
+            <span>s</span>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="col-12 d-md-none">
+      <section>
+        <div class="d-flex justify-content-center mb-3">
+          <div
+            class="d-flex justify-content-center"
+            style="width: auto; height: 150px; aspect-ratio: 1 / 1"
+          >
+            <img
+              src="/images/dog-photo.jpg"
+              alt="Dog Photo"
+              class="rounded-circle img-fluid object-fit-cover"
+            />
+          </div>
+        </div>
+        <div>
+          <h1 class="mt-3"><%- pet.name %></h1>
+          <div>
+            <div>
+              <span class="fw-bold">Aniversário:</span>
+              <span><%- pet.birthdate %></span>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3">
+          <h2>Coleira</h2>
+          <div>
+            <div>
+              <span class="fw-bold">Número Serial:</span>
+              <span><%- pet.collar.serialNumber %></span>
+            </div>
+            <div>
+              <span class="fw-bold">Versão:</span>
+              <span><%- pet.collar.version %></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
-</section>
+</div>
 <!--
 <section>
   <div class="mt-5">
