@@ -90,16 +90,18 @@ body {
 }
 
 .map {
-  min-width: 50vw;
-  min-height: 50vh;
-
   border-radius: 14px;
+
+  height: 600px;
+
+  aspect-ratio: 0;
 }
 
 @media (max-width: 768px) {
   .map {
     border-radius: 0 0 14px 14px;
     min-width: 100vw;
+    aspect-ratio: 0;
   }
 }
 
