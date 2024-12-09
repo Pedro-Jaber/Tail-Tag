@@ -178,8 +178,11 @@ module.exports.get_a_pet_get = async (req, res) => {
 
 module.exports.pet_position_get = async (req, res) => {
   const data = await Pet.findById(req.params.id, {
-    latitude: { $slice: -10 },
-    longitude: { $slice: -10 },
+    gpsData: {
+      time: { $slice: -10 },
+      latitude: { $slice: -10 },
+      longitude: { $slice: -10 },
+    },
   });
 
   res.status(200).json(data);
@@ -226,10 +229,7 @@ module.exports.add_pet_post = async (req, res) => {
 module.exports.pet_profile_get = async (req, res) => {
   const petId = req.params.id;
 
-  const pet = await Pet.findById(petId, {
-    latitude: { $slice: -10 },
-    longitude: { $slice: -10 },
-  });
+  const pet = await Pet.findById(petId, { gpsData: 0 });
 
   // Pet not found
   if (!pet) {
