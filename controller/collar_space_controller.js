@@ -3,7 +3,7 @@ const Pet = require("../model/model_pet");
 
 // Collar test [POST]
 module.exports.collar_post = async (req, res) => {
-  console.log("Collar connected");
+  // console.log("Collar connected");
   //console.log("Body: ");
   //console.log(req.body);
 
@@ -20,13 +20,17 @@ module.exports.collar_post = async (req, res) => {
   const latitude = output.metadata.latitude;
   const longitude = output.metadata.longitude;
 
-  console.log(serialNumber);
-  console.log(time);
-  console.log(latitude);
-  console.log(longitude);
+  // console.log(serialNumber);
+  // console.log(time);
+  // console.log(latitude);
+  // console.log(longitude);
+
+  console.log(
+    `[collar_post] ${serialNumber} | ${time} | ${latitude} | ${longitude}`
+  );
 
   if (!serialNumber || !time || !latitude || !longitude) {
-    console.log("[collar_post] Error: missing information");
+    // console.log("[collar_post] Error: missing information");
     res.status(400).send("400 Bad Request");
     return;
   }
