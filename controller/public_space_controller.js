@@ -1,6 +1,6 @@
 // home
 module.exports.home_get = (req, res) => {
-  res.status(200).render("home");
+  res.status(200).render("home", { title: "Home" });
 };
 
 // sign up
