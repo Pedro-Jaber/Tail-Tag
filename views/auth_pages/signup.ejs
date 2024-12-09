@@ -1,0 +1,324 @@
+<!-- 
+<form>
+  <h2>Crie sua conta</h2>
+
+  <div>
+    <label for="name">Nome</label>
+    <input type="text" name="name" required />
+    <div class="name error"></div>
+  </div>
+
+  <div>
+    <label for="lastname">Sobrenome</label>
+    <input type="text" name="lastname" required />
+    <div class="lastname error"></div>
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+    <input type="text" name="email" required />
+    <div class="email error"></div>
+  </div>
+
+  <div>
+    <p>
+      A senha deve conter pelo menos: <br />
+      - 6 caracteres <br />
+      - uma letra maiúscula <br />
+      - uma letra minúscula <br />
+      - um número <br />
+      - um caractere especial <br />
+    </p>
+  </div>
+
+  <div>
+    <label for="password">Senha</label>
+    <input type="password" name="password" required />
+    <div class="password error"></div>
+  </div>
+
+  <div>
+    <label for="verify_password">Verirficar Senha</label>
+    <input type="password" name="verify_password" required />
+    <div class="verify_password error"></div>
+  </div>
+
+  <div>
+    <button type="submit">Criar</button>
+  </div>
+</form> 
+-->
+
+<div
+  class="container d-flex justify-content-center align-items-center min-vh-100"
+>
+  <div class="card p-4 shadow-lg" style="max-width: 500px; width: 100%">
+    <h2 class="text-center mb-4">Criar Conta</h2>
+    <form id="sign-up-form">
+      <!-- Name -->
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="Enter your first name"
+          required
+        />
+        <div class="name error fw-medium text-danger" id="name-error"></div>
+      </div>
+
+      <!-- Last Name -->
+      <div class="mb-3">
+        <label for="last-name" class="form-label">Sobrenome</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lastname"
+          name="lastName"
+          placeholder="Enter your last name"
+          required
+        />
+        <div
+          class="lastname error fw-medium text-danger"
+          id="lastname-error"
+        ></div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+        <div class="email error fw-medium text-danger" id="email-error"></div>
+      </div>
+
+      <div class="mb-3" id="password_requirements">
+        <span>A senha deve conter pelo menos:</span>
+
+        <ul class="password-conditions">
+          <li class="password-condition fw-medium" id="password-length">
+            <i class="bi bi-dot"></i>6 caracteres
+          </li>
+          <li class="password-condition fw-medium" id="password-uppercase">
+            <i class="bi bi-dot"></i>1 letra maiúscula
+          </li>
+          <li class="password-condition fw-medium" id="password-lowercase">
+            <i class="bi bi-dot"></i>1 letra minúscula
+          </li>
+          <li class="password-condition fw-medium" id="password-number">
+            <i class="bi bi-dot"></i>1 número
+          </li>
+          <li class="password-condition fw-medium" id="password-special">
+            <i class="bi bi-dot"></i>1 caractere especial
+          </li>
+        </ul>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Senha</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="Enter a password"
+          required
+        />
+        <div class="password error" id="password-error"></div>
+      </div>
+
+      <!-- Verify Password -->
+      <div class="mb-3">
+        <label for="verify_password" class="form-label">Verificar Senha</label>
+        <input
+          type="password"
+          class="form-control"
+          id="verify_password"
+          name="verify_password"
+          placeholder="Re-enter your password"
+          required
+        />
+        <div
+          class="verify_password error fw-medium text-danger"
+          id="verify_password-error"
+        ></div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Criar</button>
+      </div>
+
+      <!-- Already have an account -->
+      <div class="mt-3 text-center">
+        <p>
+          Already have an account?
+          <a href="/login" class="text-decoration-none">Login here</a>.
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<span>Test@1234</span>
+
+<script>
+  const form = document.querySelector("form");
+  const nameError = document.getElementById("name-error");
+  const lastnameError = document.getElementById("lastname-error");
+  const emailError = document.getElementById("email-error");
+  const passwordError = document.getElementById("password-error");
+  const verifyPasswordError = document.getElementById("verify_password-error");
+
+  form.password.addEventListener("input", () => {
+    // Regex to validate password
+    const validations = [
+      {
+        id: "password-length",
+        regex: /(?=.{6,})/,
+      },
+      {
+        id: "password-uppercase",
+        regex: /(?=.*[A-Z])/,
+      },
+      {
+        id: "password-lowercase",
+        regex: /(?=.*[a-z])/,
+      },
+      {
+        id: "password-number",
+        regex: /(?=.*\d)/,
+      },
+      {
+        id: "password-special",
+        regex: /[@$!%*?&]/,
+      },
+    ];
+
+    // Validate password
+    for (const validation of validations) {
+      const password_requirement = document.getElementById(validation.id);
+      const icon = password_requirement.children[0];
+
+      password_requirement.classList.toggle(
+        "text-success",
+        validation.regex.test(password.value)
+      );
+
+      password_requirement.classList.toggle(
+        "text-danger",
+        !validation.regex.test(password.value)
+      );
+
+      if (!validation.regex.test(password.value)) {
+        // password_requirement.classList.remove("positive", "text-success");
+        // password_requirement.classList.add("negative", "text-danger");
+        icon.classList.replace("bi-dot", "bi-x");
+        icon.classList.replace("bi-check", "bi-x");
+      } else {
+        // password_requirement.classList.remove("negative", "text-danger");
+        // password_requirement.classList.add("positive", "text-success");
+        icon.classList.replace("bi-dot", "bi-check");
+        icon.classList.replace("bi-x", "bi-check");
+      }
+    }
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    //reset errors
+    nameError.textContent = "";
+    lastnameError.textContent = "";
+    emailError.textContent = "";
+    passwordError.textContent = "";
+
+    // get the values
+    const name = form.name.value;
+    const lastname = form.lastname.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const verify_password = form.verify_password.value;
+
+    const validations = [
+      {
+        id: "password-length",
+        regex: /(?=.{6,})/,
+      },
+      {
+        id: "password-uppercase",
+        regex: /(?=.*[A-Z])/,
+      },
+      {
+        id: "password-lowercase",
+        regex: /(?=.*[a-z])/,
+      },
+      {
+        id: "password-number",
+        regex: /(?=.*\d)/,
+      },
+      {
+        id: "password-special",
+        regex: /[@$!%*?&]/,
+      },
+    ];
+
+    // Validate password
+    for (const validation of validations) {
+      if (!validation.regex.test(password)) {
+        return;
+      }
+    }
+
+    // Check if password and verify_password are equal
+    if (password !== verify_password) {
+      verifyPasswordError.textContent = "As senhas são diferentes";
+      return;
+    }
+
+    // Send request and get response with errors
+    try {
+      const res = await fetch("/signup", {
+        method: "POST",
+        body: JSON.stringify({
+          name,
+          lastname,
+          email,
+          password,
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (data.errors) {
+        // <div class="name error"></div>;
+        nameError.textContent = data.errors.name;
+
+        // <div class="lastname error"></div>;
+        lastnameError.textContent = data.errors.lastname;
+
+        // <div class="email error"></div>
+        emailError.textContent = data.errors.email;
+
+        // <div class="password error"></div>
+        passwordError.textContent = data.errors.password;
+      }
+      if (data.user) {
+        location.assign("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+</script>

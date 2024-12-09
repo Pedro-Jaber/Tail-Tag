@@ -5,15 +5,15 @@ module.exports.home_get = (req, res) => {
 
 // sign up
 module.exports.signup_get = (req, res) => {
-  res.status(200).render("signup");
+  res.status(200).render("auth_pages/signup");
 };
 
 // login
 module.exports.login_get = (req, res) => {
-  res.status(200).render("login");
+  res.status(200).render("auth_pages/login");
 };
 
 // admin/login
 module.exports.admin_login_get = (req, res) => {
-  res.status(200).render("login_admin");
+  res.status(200).render("auth_pages/login_admin");
 };

@@ -25,7 +25,7 @@ const handleErrors = (err) => {
 
   // duplicate email error code
   if (err.code == 11000) {
-    errors.email = "that email is already registered";
+    errors.email = "Esse email já está cadastrado";
     return errors;
   }
 

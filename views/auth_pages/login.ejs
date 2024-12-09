@@ -1,0 +1,113 @@
+<!-- 
+ <form>
+  <h2>Login</h2>
+
+  <div class="general error"></div>
+
+  <div>
+    <label for="email">Email</label>
+    <input type="text" name="email" required />
+  </div>
+
+  <div>
+    <label for="password">Senha</label>
+    <input type="password" name="password" required />
+  </div>
+
+  <button>Entrar</button>
+</form> 
+-->
+
+<div
+  class="container d-flex justify-content-center align-items-center min-vh-100"
+>
+  <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%">
+    <h2 class="text-center mb-4">Login</h2>
+    <form id="login-form">
+      <!-- Email Field -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+
+      <!-- Password Field -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Senhas</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+
+      <div
+        class="general error text-capitalize fw-medium text-danger text-center mb-2"
+        style="display: none"
+        id="general-error"
+      ></div>
+
+      <!-- Submit Button -->
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Login</button>
+      </div>
+
+      <!-- Links -->
+      <div class="mt-3 text-center">
+        <a href="#" class="link-secondary text-decoration-none"
+          >Forgot Password?</a
+        >
+      </div>
+    </form>
+  </div>
+</div>
+
+<span>Test@1234</span>
+
+<script>
+  // const form = document.querySelector("form");
+  const form = document.getElementById("login-form");
+  const generalError = document.getElementById("general-error");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    //reset errors
+    generalError.textContent = "";
+
+    // get the values
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+      const res = await fetch("/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+      //console.log(data)
+
+      if (data.errors) {
+        // <div class="general error"></div>
+        generalError.style.display = "block";
+        generalError.textContent = data.errors.general;
+      }
+      if (data.user) {
+        location.assign("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+</script>
