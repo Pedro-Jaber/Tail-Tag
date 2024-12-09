@@ -174,46 +174,23 @@
 <%- include("../partials/getPet.ejs") %>
 <script src="/js/leaflet.js"></script>
 <script>
-  get_pet_position(pet._id);
+  var element = document.getElementById("map");
 
-  //const form = document.querySelector("form");
+  // Initialize the map
+  var map = L.map(element);
 
-  /*
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const id = form.id.value;
-    const latitude = form.latitude.value;
-    const longitude = form.longitude.value;
-
-    try {
-      const response = await fetch("", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id,
-          latitude,
-          longitude,
-        }),
-      });
-
-      location.reload(true);
-    } catch (error) {
-      console.log(error);
-    }
-  });
-  */
+  initializeMap(pet._id);
 
   (function () {
     var el = document.getElementById("time-to-update");
-    var count = 30;
+    var count = 5;
     setInterval(function () {
       count -= 1;
       el.innerHTML = count;
       if (count == 0) {
-        location.reload();
+        // location.reload();
+        get_pet_position(pet._id);
+        count = 6;
       }
     }, 1000);
   })();

@@ -1,12 +1,7 @@
 // Initialize leaflet.js
 // var L = require("leaflet");
 
-async function get_pet_position(pet_id) {
-  var element = document.getElementById("map");
-
-  // Initialize the map
-  var map = L.map(element);
-
+async function initializeMap(pet_id) {
   // Initialize the base layer
   L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
@@ -14,26 +9,37 @@ async function get_pet_position(pet_id) {
       '&copy; OSM Mapnik <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }).addTo(map);
 
+  get_pet_position(pet_id);
+}
+
+async function get_pet_position(pet_id) {
   fetch(`/user/pet-position/${pet_id}`)
     .then((response) => {
       return response.json();
     })
     .then((json) => {
-      //console.log(json);
-      // console.log(json.latitude.reverse()[0]);
-      // console.log(json.latitude.reverse()[0].$numberDecimal);
-      // console.log(json.longitude.reverse()[0].$numberDecimal);
+      console.log(json);
 
-      // Target's GPS coordinates.
+      // Target's GPS coordinates
       let target = L.latLng(
         json.gpsData.latitude.reverse()[0].$numberDecimal,
         json.gpsData.longitude.reverse()[0].$numberDecimal
       );
 
-      // Place a marker on the same location.
+      // Remove all markers from the map
+      console.log(map._layers);
+      map.removeLayer(map._layers);
+
+      map.eachLayer(function (layer) {
+        if (layer instanceof L.Marker) {
+          map.removeLayer(layer);
+        }
+      });
+
+      // Place a marker
       L.marker(target).addTo(map);
 
-      // Set map's center to target with zoom 14.
+      // Set map's center to target with zoom 14
       map.setView(target, 17);
     });
 }
