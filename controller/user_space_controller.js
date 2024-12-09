@@ -196,7 +196,7 @@ module.exports.add_pet_post = async (req, res) => {
 
   const name = req.body.name;
   const birthdate = req.body.birthdate;
-  const serialNumber = req.body.serialNumber;
+  const serialNumber = req.body.collar.serialNumber;
   //const version = req.body.version; // TODO get from database??
 
   const pet = await Pet.create({
