@@ -48,6 +48,7 @@ After setting up the application:
 1. **Access the Web Interface**: Navigate to `http://localhost:5505` in your browser.
 2. **Register Your Pet**: Create a profile for your pet, including necessary details.
 3. **Monitor in Real-Time**: View your pet's location and health metrics on the dashboard.
+   ![](https://github.com/Pedro-Jaber/Tail-Tag/blob/main/public/Demo/tailtag-demo.gif?raw=true)
 
 ## Contributing
 
